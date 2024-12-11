@@ -19,6 +19,8 @@ class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    @IBOutlet weak var favouriteButton: UIButton!
+    
     var movie: Movie?
     
     override func viewDidLoad() {
@@ -50,4 +52,16 @@ class MovieDetailViewController: UIViewController {
             }
         }.resume()
     }
+    
+    @IBAction func favouriteButtonTapped(_ sender: UIButton) {
+            guard let movie = movie else { return }
+            
+            // Save the movie to Core Data
+            CoreDataManager.shared.saveMovie(movie)
+            
+            // Provide user feedback (e.g., show an alert or update the button)
+            let alert = UIAlertController(title: "Favourited", message: "Movie has been added to your favourites!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true, completion: nil)
+        }
 }
